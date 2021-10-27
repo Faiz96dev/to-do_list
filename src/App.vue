@@ -1,17 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="page-container">
+    <md-app md-mode="reveal">
+      <md-app-toolbar class="md-primary">
+        <span class="md-title">Geniusee To-Do list</span>
+      </md-app-toolbar>
+      <md-app-content>
+        <add-todo-bar/>
+        <todo-list/>
+      </md-app-content>
+    </md-app>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddTodoBar from './components/AddTodoBar.vue'
+import TodoList from './components/TodoList.vue'
+import {mapActions} from "vuex";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TodoList,
+    AddTodoBar
+  },
+  methods:{
+     ...mapActions('todos', ['loadData']),
+  },
+  mounted() {
+    this.loadData()
   }
 }
 </script>
