@@ -6,6 +6,7 @@ export default {
         todos: [],
     },
     mutations: {
+
         SET_TODOS(state, todos) {
             state.todos = todos
             setToLocalStorage(state.todos)

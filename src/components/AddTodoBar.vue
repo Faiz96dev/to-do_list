@@ -2,19 +2,19 @@
   <div class="wrapper">
     <div class="container">
       <md-field>
-      <label>Todo description</label>
-      <md-textarea v-model="description" md-autogrow></md-textarea>
-    </md-field>
+        <label>Todo description</label>
+        <md-textarea v-model="description" md-autogrow></md-textarea>
+      </md-field>
       <md-button @click="add" add class="md-dense md-raised md-primary">Add</md-button>
     </div>
-    <canvas-draw/>
+    <CanvasDraw ref="draw"/>
   </div>
 </template>
 
 <script>
 import {mapActions, mapState} from "vuex";
-import uniqid from 'uniqid';
 import CanvasDraw from "@/components/CanvasDraw";
+import uniqid from 'uniqid';
 
 
 export default {
@@ -26,12 +26,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('todos', ['todos']),
+    ...mapState('todos', ['todos', 'canvas']),
   },
   methods: {
     ...mapActions('todos', ['addTodo']),
     add() {
-      this.addTodo({description: this.description, completed: false, id: uniqid() })
+      let img = this.$refs.draw.save()
+      this.addTodo({description: this.description, completed: false, id: uniqid(), img: img})
       this.description = ''
     }
   }

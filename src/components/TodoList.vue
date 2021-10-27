@@ -1,38 +1,28 @@
 <template>
-      <md-table v-if="todos.length">
-        <md-table-row>
-          <md-table-head>Description</md-table-head>
-          <md-table-head>Status</md-table-head>
-          <md-table-head>Actions</md-table-head>
-        </md-table-row>
-
-        <md-table-row v-for="todo in todos" :key="todo.id">
-          <md-table-cell >{{ todo.description }}</md-table-cell>
-          <md-table-cell v-if="!todo.completed">Completed</md-table-cell>
-          <md-table-cell v-else>In process</md-table-cell>
-          <md-table-cell>
-            <md-button @click="toggleActive(todo.id)" v-if="!todo.completed" class="md-dense md-raised md-primary">Activate</md-button>
-            <md-button @click="toggleActive(todo.id)" v-else class="md-dense md-raised md-primary">Deactivate</md-button>
-            <md-button @click="removeTodo(todo.id)" class="md-dense md-raised md-accent">Remove</md-button>
-          </md-table-cell>
-        </md-table-row>
-      </md-table>
+  <md-table v-if="todos.length">
+    <md-table-row>
+      <md-table-head>Description</md-table-head>
+      <md-table-head>Note</md-table-head>
+      <md-table-head>Status</md-table-head>
+      <md-table-head>Actions</md-table-head>
+    </md-table-row>
+    <list-item v-for="todo in todos" :todo="todo" :key="todo.id"/>
+  </md-table>
 </template>
 
 <script>
 
 import {mapActions, mapState} from "vuex";
+import ListItem from "@/components/ListItem";
 
 export default {
   name: 'AddTodoList',
-  props: {
-    msg: String
-  },
+  components: {ListItem},
   computed: {
     ...mapState('todos', ['todos']),
   },
-  methods:{
-      ...mapActions('todos', ['removeTodo', 'toggleActive']),
+  methods: {
+    ...mapActions('todos', ['removeTodo', 'toggleActive']),
 
   }
 }
